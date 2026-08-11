@@ -1,3 +1,11 @@
+// CONEXIÓN A SUPABASE
+const SUPABASE_URL = "https://txecerymvnfonhlsjiar.supabase.co/rest/v1/"; 
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR4ZWNlcnltdm5mb25obHNqaWFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0MDg4NzYsImV4cCI6MjEwMTk4NDg3Nn0.VvFYibG2WxBgD5fM7J5zVhL7WnMghUy1EEglCyOAxA4"; // Pega la clave anon/public del Paso 2
+
+const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+
+
 // CLASIFICACIÓN Y ORDEN DE MASCOTAS
 const mascotasDiego = [
     { nombre: "Loki", ruta: "imagenes/Loki.png" }
