@@ -1,6 +1,6 @@
 // CONEXIÓN A SUPABASE
 const SUPABASE_URL = "https://txecerymvnfonhlsjiar.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhYmdjaW9iIJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR4ZWNlcnltdm5mb25obHNqaWFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjM0NDg3Nn0.VvFYibG2WxBgD5fM7J5zVhL7WnMghUy1EEglCyOAxA4";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR4ZWNlcnltdm5mb25obHNqaWFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjM0NDg3Nn0.VvFYibG2WxBgD5fM7J5zVhL7WnMghUy1EEglCyOAxA4";
 
 const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
