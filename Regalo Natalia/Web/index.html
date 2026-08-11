@@ -54,7 +54,7 @@
 
             </div>
 
-            <!-- Navegación con Pestaña Recompensas -->
+            <!-- Navegación con Pestañas -->
             <nav id="navegacion-pestanas">
                 <button class="tab-btn activo" onclick="cambiarPestana('pestana-juntos', this)">Metas Juntos </button>
                 <button class="tab-btn btn-individual" onclick="cambiarPestana('pestana-individuales', this)">Metas Individuales </button>
@@ -110,7 +110,7 @@
         </main>
     </div>
 
-    <!-- MODAL EDITAR -->
+    <!-- MODAL EDITAR META -->
     <div id="modal-editar" class="modal-overlay">
         <div class="modal-contenido">
             <h3>Editar Meta ✎</h3>
@@ -122,10 +122,10 @@
         </div>
     </div>
 
-<!-- MODAL BONITO PARA BORRAR METAS -->
+    <!-- MODAL BONITO PARA BORRAR METAS -->
     <div id="modal-borrar" class="modal-overlay">
         <div class="modal-contenido">
-            <!-- OPCIÓN A: CUESTIONARIO DE CULPAS (SÓLO METAS JUNTOS) -->
+            <!-- OPCIÓN A: CUESTIONARIO DE CULPAS (METAS EN PAREJA) -->
             <div id="borrar-paso-1" style="display: none;">
                 <h3>¿Por qué quieres borrar la meta? 🗑</h3>
                 <div class="opciones-encuesta">
@@ -158,15 +158,6 @@
         </div>
     </div>
 
-    <!-- MODAL DE DERROTA / CANJE DE RECOMPENSA (0 HP) -->
-    <div id="modal-recompensa-muerte" class="modal-overlay">
-        <div class="modal-contenido modal-especial">
-            <h3 id="titulo-modal-muerte">¡ALGUIEN LLEGÓ A 0 HP! 💀</h3>
-            <p id="subtitulo-modal-muerte" style="margin-bottom: 16px; font-size: 0.9rem; color: #555;">Elige tu recompensa:</p>
-            <div id="contenedor-opciones-recompensa" class="opciones-encuesta"></div>
-        </div>
-    </div>
-
     <!-- MODAL FESTIVO AL CUMPLIR META (SUMAR HP) -->
     <div id="modal-cumplir-meta" class="modal-overlay">
         <div class="modal-contenido modal-especial">
@@ -179,17 +170,23 @@
             </div>
         </div>
     </div>
-    
+
+    <!-- MODAL DE DERROTA / CANJE DE RECOMPENSA (0 HP) -->
+    <div id="modal-recompensa-muerte" class="modal-overlay">
+        <div class="modal-contenido modal-especial">
+            <h3 id="titulo-modal-muerte">¡ALGUIEN LLEGÓ A 0 HP! 💀</h3>
+            <p id="subtitulo-modal-muerte" style="margin-bottom: 16px; font-size: 0.9rem; color: #555;">Elige tu recompensa:</p>
+            <div id="contenedor-opciones-recompensa" class="opciones-encuesta"></div>
+        </div>
+    </div>
+
+    <!-- CONTENEDOR DE CHISPAS PÍXEL -->
     <div id="contenedor-chispas"></div>
 
-    <script src="script.js"></script>
-</body>
-</html>
-
-<!-- LIBRERÍA OFICIAL DE SUPABASE -->
+    <!-- LIBRERÍA OFICIAL DE SUPABASE (Cargada antes de script.js) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
-    <!-- TU ARCHIVO JS -->
+    <!-- ARCHIVO JAVASCRIPT PRINCIPAL -->
     <script src="script.js"></script>
 </body>
 </html>
