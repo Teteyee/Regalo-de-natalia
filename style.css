@@ -1,628 +1,736 @@
-/* ==========================================
-   CONFIGURACIÓN GENERAL Y FUENTES
-   ========================================== */
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Press+Start+2P&display=swap');
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+/* PARED ROSA CON TEXTURA DE FLORES PÍXEL */
 body {
-    background-color: #fff0f5;
-    background-image: radial-gradient(#ffb6c1 1px, transparent 1px);
-    background-size: 20px 20px;
-    font-family: 'Pixelify Sans', cursive, sans-serif;
-    color: #4a4a4a;
+    background-color: #ffb6c1;
+    background-image: 
+        radial-gradient(#ff69b4 20%, transparent 20%),
+        radial-gradient(#ffffff 15%, transparent 15%),
+        radial-gradient(#ffb6c1 20%, transparent 20%),
+        radial-gradient(#ffffff 15%, transparent 15%);
+    background-position: 0 0, 10px 10px, 20px 20px, 30px 30px;
+    background-size: 40px 40px;
+    color: #333333;
+    font-family: 'Pixelify Sans', 'Press Start 2P', monospace, sans-serif;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     min-height: 100vh;
-    padding: 20px 10px;
+    padding: 15px;
 }
 
-/* MARCO PRINCIPAL DE LA APLICACIÓN */
+/* MARCO A PANTALLA COMPLETA */
 #marco-principal {
-    background: #ffffff;
-    border: 4px solid #ff69b4;
-    border-radius: 16px;
-    box-shadow: 0 8px 0 #ffb6c1, 0 12px 20px rgba(0,0,0,0.1);
-    width: 100%;
-    max-width: 850px;
+    background-color: #fff0f5;
+    border: 6px solid #ff69b4;
+    box-shadow: 0 0 0 4px #ffffff, 0 0 0 10px #ff1493;
+    width: 95%;
+    max-width: 1200px;
+    min-height: 90vh;
     padding: 24px;
-    text-align: center;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
 }
 
-h1 {
-    font-family: 'Press Start 2P', cursive;
-    color: #ff1493;
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 0px #ffb6c1;
+header { 
+    text-align: center; 
+    margin-bottom: 20px; 
 }
 
-h2 {
-    font-family: 'Press Start 2P', cursive;
-    color: #ff1493;
-    font-size: 1.2rem;
-    margin: 15px 0;
+h1 { 
+    font-size: 2.2rem; 
+    color: #ff1493; 
+    margin-bottom: 16px; 
+    text-shadow: 2px 2px 0px #ffffff; 
 }
 
-.subtitulo-jardin {
-    font-size: 0.9rem;
-    color: #888;
-    margin-bottom: 10px;
-}
-
-/* ==========================================
-   PERSONAJES Y BARRAS DE VIDA (HP)
-   ========================================== */
+/* AVATARES GRANDES Y BARRAS DE VIDA (HP) */
 #cuadro-personajes-hp {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    gap: 15px;
-    background: #fff5f8;
-    border: 3px solid #ffb6c1;
-    border-radius: 12px;
-    padding: 15px;
-    margin-bottom: 20px;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 40px;
+    background-color: #ffffff;
+    border: 4px solid #ff69b4;
+    padding: 16px 24px;
+    width: fit-content;
+    margin: 0 auto 20px auto;
+    border-radius: 8px;
+    box-shadow: 4px 4px 0px #ffb6c1;
 }
 
 .tarjeta-jugador {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 45%;
+    gap: 8px;
 }
 
 .contenedor-avatar {
     position: relative;
-    margin-bottom: 8px;
+    width: 90px;
+    height: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
 }
 
+/* TAMAÑO UNIFORME PARA SKINS NORMALES Y DAÑADAS */
 .sprite-avatar-grande {
-    width: 64px;
-    height: 64px;
+    height: 65px !important;
+    width: auto;
+    max-width: 90px;
+    object-fit: contain;
     image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    transition: transform 0.2s;
 }
 
 .badge-estado {
     position: absolute;
     top: -5px;
-    right: -10px;
+    right: -5px;
     font-size: 1.2rem;
 }
 
 .hp-box {
-    width: 100%;
+    width: 130px;
 }
 
 .hp-info {
     display: flex;
     justify-content: space-between;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     font-weight: bold;
     color: #ff1493;
     margin-bottom: 4px;
 }
 
 .hp-bar-fondo {
-    background: #e0e0e0;
-    border: 2px solid #4a4a4a;
-    border-radius: 6px;
-    height: 16px;
+    width: 100%;
+    height: 14px;
+    background-color: #e0e0e0;
+    border: 2px solid #ff69b4;
+    border-radius: 4px;
     overflow: hidden;
-    position: relative;
 }
 
 .hp-bar-fill {
-    background: #2a9d8f;
     height: 100%;
+    background: linear-gradient(90deg, #2a9d8f, #21867a);
     transition: width 0.4s ease, background-color 0.4s ease;
 }
 
 .hp-bar-fill.hp-bajo {
-    background: #e76f51;
+    background: linear-gradient(90deg, #e63946, #d62828) !important;
 }
 
-/* ==========================================
-   NAVEGACIÓN CON PESTAÑAS
-   ========================================== */
-#navegacion-pestanas {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
+/* NAVEGACIÓN Y PESTAÑAS */
+#navegacion-pestanas { 
+    display: flex; 
+    justify-content: center; 
+    gap: 12px; 
+    flex-wrap: wrap; 
 }
 
 .tab-btn {
-    background: #ffffff;
-    border: 3px solid #ff69b4;
-    border-radius: 10px;
-    padding: 10px 14px;
-    font-family: 'Pixelify Sans', cursive;
-    font-size: 1rem;
-    font-weight: bold;
+    background-color: #ffffff;
     color: #ff1493;
+    border: 3px solid #ff69b4;
+    padding: 10px 20px;
+    font-family: inherit;
+    font-size: 0.95rem;
     cursor: pointer;
+    border-radius: 6px;
     transition: all 0.2s ease;
+    box-shadow: 2px 2px 0px #ff69b4;
 }
 
-.tab-btn:hover {
-    background: #ffe6f0;
-    transform: translateY(-2px);
+.tab-btn:hover { 
+    background-color: #ffb6c1; 
+    color: #ffffff; 
+    transform: translateY(-2px); 
 }
 
-.tab-btn.activo {
-    background: #ff69b4;
-    color: #ffffff;
-    box-shadow: 0 4px 0 #c71585;
+.tab-btn.activo { 
+    background-color: #ff69b4; 
+    color: #ffffff; 
+    border-color: #ff1493; 
 }
 
-.btn-individual { border-color: #7209b7; color: #7209b7; }
-.btn-individual.activo { background: #7209b7; color: #fff; box-shadow: 0 4px 0 #4a0072; }
-
-.btn-jardin { border-color: #2a9d8f; color: #2a9d8f; }
-.btn-jardin.activo { background: #2a9d8f; color: #fff; box-shadow: 0 4px 0 #1b665d; }
-
-.btn-recompensas { border-color: #e76f51; color: #e76f51; }
-.btn-recompensas.activo { background: #e76f51; color: #fff; box-shadow: 0 4px 0 #9c3d25; }
-
-/* ==========================================
-   SECCIONES Y LISTA DE METAS
-   ========================================== */
-.contenido-pestana {
-    display: none;
+.btn-individual:hover, .btn-individual.activo {
+    background-color: #457b9d !important;
+    border-color: #1d3557 !important;
+    color: #ffffff !important;
+    box-shadow: 2px 2px 0px #1d3557;
 }
 
-.contenido-pestana.activa {
-    display: block;
+.btn-jardin:hover, .btn-jardin.activo {
+    background-color: #2a9d8f !important;
+    border-color: #1e7166 !important;
+    color: #ffffff !important;
+    box-shadow: 2px 2px 0px #1e7166;
 }
 
-.lista-vertical {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 15px;
+.btn-recompensas:hover, .btn-recompensas.activo {
+    background-color: #e76f51 !important;
+    border-color: #f4a261 !important;
+    color: #ffffff !important;
+    box-shadow: 2px 2px 0px #f4a261;
 }
 
-.renglon-meta {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: #fff;
-    border: 2px dashed #ffb6c1;
-    border-radius: 10px;
-    padding: 10px 14px;
-    transition: background 0.2s ease;
+.contenido-pestana { display: none; }
+.contenido-pestana.activa { display: block; }
+h2 { font-size: 1.6rem; margin-bottom: 20px; color: #ff1493; text-align: center; }
+
+/* LISTA DE METAS Y RENGLONES */
+.lista-vertical { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 32px; 
+    width: 100%; 
 }
 
-.renglon-meta:hover {
-    background: #fff9fb;
+.renglon-meta { 
+    position: relative; 
+    display: flex; 
+    flex-direction: column; 
+    width: 100%; 
+    margin-top: 15px; 
 }
 
+/* CICLO DE ANIMACIÓN DE MASCOTAS (DUERMEN EN INICIO 30s -> 2 VUELTAS -> REPITEN) */
 .mascota-libre-marco {
-    position: relative;
-    width: 36px;
-    height: 36px;
-    flex-shrink: 0;
+    position: absolute;
+    top: -42px;
+    left: 20px;
+    z-index: 5;
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    animation: caminarDosVueltas 45s ease-in-out infinite;
 }
 
 .sprite-mascota-libre {
-    width: 36px;
-    height: 36px;
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
     image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.2));
 }
 
 .zzz-animada {
-    position: absolute;
-    top: -8px;
-    right: -6px;
-    font-size: 0.75rem;
-    animation: flotarZzz 2s infinite ease-in-out;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    animation: flotarZzz 1.2s infinite ease-in-out, visibilidadZzz 45s ease-in-out infinite;
+}
+
+@keyframes caminarDosVueltas {
+    0%, 66.6% { transform: translateX(0); }
+    74% { transform: translateX(180px); }
+    81.4% { transform: translateX(0); }
+    88.8% { transform: translateX(180px); }
+    96.2%, 100% { transform: translateX(0); }
+}
+
+@keyframes visibilidadZzz {
+    0%, 65% { opacity: 1; visibility: visible; }
+    66.6%, 100% { opacity: 0; visibility: hidden; }
 }
 
 @keyframes flotarZzz {
-    0%, 100% { transform: translateY(0); opacity: 0.5; }
-    50% { transform: translateY(-4px); opacity: 1; }
+    0% { transform: translateY(0) scale(0.8); opacity: 0.4; }
+    50% { transform: translateY(-8px) scale(1.2); opacity: 1; }
+    100% { transform: translateY(-16px) scale(0.8); opacity: 0; }
+}
+
+/* ANIMACIÓN DE CAÍDA AL VACÍO AL BORRAR */
+.mascota-caer-vacio {
+    animation: caerAlVacio 0.8s forwards ease-in !important;
+}
+
+@keyframes caerAlVacio {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    30% { transform: translateY(-15px) rotate(-15deg); }
+    100% { transform: translateY(120px) rotate(90deg); opacity: 0; }
 }
 
 .contenido-meta {
+    background-color: #ffffff;
+    border: 3px solid #ff69b4;
+    padding: 16px 20px;
+    border-radius: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    gap: 10px;
+    box-shadow: 3px 3px 0px #ffb6c1;
+    transition: transform 0.2s;
 }
 
-.meta-check-texto {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-align: left;
-    word-break: break-word;
-}
-
-.meta-check-texto input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    accent-color: #ff1493;
-    cursor: pointer;
-    flex-shrink: 0;
-}
+.meta-check-texto { display: flex; align-items: center; gap: 16px; flex-grow: 1; }
+.meta-check-texto label { font-size: 1.15rem; cursor: pointer; color: #333; }
+.meta-check-texto input[type="checkbox"] { width: 22px; height: 22px; cursor: pointer; accent-color: #ff69b4; }
 
 .texto-tachado-verde {
     text-decoration: line-through;
-    color: #2a9d8f !important;
+    text-decoration-color: #2a9d8f;
+    text-decoration-thickness: 3px;
+    color: #888888;
 }
 
-.acciones-meta {
-    display: flex;
-    gap: 6px;
-    flex-shrink: 0;
-}
+.acciones-meta { display: flex; gap: 8px; }
+.btn-accion { background-color: #fff0f5; border: 2px solid #ff69b4; padding: 6px 10px; font-size: 1rem; cursor: pointer; border-radius: 4px; transition: all 0.2s; }
+.btn-editar:hover { background-color: #ffd166; border-color: #e76f51; }
+.btn-borrar:hover { background-color: #e63946; color: #fff; border-color: #b7094c; }
 
-.btn-accion {
-    background: none;
-    border: none;
-    font-size: 1.1rem;
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.2s ease;
-}
+.renglon-agregar .contenido-meta { border: 3px dashed #ff1493; background-color: #fff5f8; }
+#nueva-meta-input { flex-grow: 1; padding: 10px; border: 2px solid #ff69b4; border-radius: 6px; font-family: inherit; margin-right: 12px; outline: none; }
+#btn-agregar { background-color: #ff69b4; color: #fff; border: 2px solid #ff1493; padding: 10px 18px; font-family: inherit; cursor: pointer; border-radius: 6px; transition: all 0.2s; }
+#btn-agregar:hover { background-color: #2a9d8f; border-color: #1e7166; transform: scale(1.03); }
 
-.btn-accion:hover {
-    opacity: 1;
-}
-
-/* RENGLÓN AGREGAR META */
-.renglon-agregar .contenido-meta, .renglon-agregar-indiv {
-    display: flex;
-    gap: 8px;
-    width: 100%;
-    margin-top: 8px;
-}
-
-.renglon-agregar input, .renglon-agregar-indiv input {
-    flex: 1;
-    padding: 10px 12px;
-    border: 2px solid #ffb6c1;
-    border-radius: 8px;
-    font-family: 'Pixelify Sans', cursive;
-    font-size: 0.95rem;
-    outline: none;
-}
-
-.renglon-agregar button, .renglon-agregar-indiv button {
-    background: #ff69b4;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 14px;
-    font-family: 'Pixelify Sans', cursive;
-    font-weight: bold;
-    cursor: pointer;
-    white-space: nowrap;
-}
-
-/* METAS INDIVIDUALES GRID */
+/* SECCIÓN METAS INDIVIDUALES */
 .grid-individuales {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-top: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 28px;
 }
 
 .bloque-individual {
-    background: #fff;
-    border-radius: 12px;
-    padding: 14px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 24px;
+    transition: transform 0.2s;
 }
 
-.marco-diego { border: 3px solid #4ea8de; }
-.marco-natalia { border: 3px solid #ff85a2; }
-
-.titulo-individual {
-    font-size: 1.1rem;
-    margin-bottom: 10px;
+/* MARCO NATALIA (AZUL OCÉANO) */
+.marco-natalia {
+    background-color: #f0f8ff;
+    border: 4px solid #457b9d;
+    box-shadow: 5px 5px 0px #1d3557;
 }
 
-.marco-diego .titulo-individual { color: #0077b6; }
-.marco-natalia .titulo-individual { color: #d63384; }
+.marco-natalia .titulo-individual {
+    color: #1d3557;
+    font-size: 1.3rem;
+    margin-bottom: 18px;
+    text-align: center;
+    border-bottom: 2px dashed #457b9d;
+    padding-bottom: 8px;
+}
 
-/* ==========================================
-   JARDÍN Y TARJETAS
-   ========================================== */
+.marco-natalia .renglon-agregar-indiv input {
+    border: 2px solid #457b9d;
+}
+
+.marco-natalia .renglon-agregar-indiv button {
+    background-color: #457b9d;
+    border: 2px solid #1d3557;
+}
+
+.marco-natalia .renglon-agregar-indiv button:hover {
+    background-color: #1d3557;
+}
+
+.marco-natalia .contenido-meta {
+    border-color: #457b9d;
+    box-shadow: 3px 3px 0px #a8dadc;
+}
+
+.marco-natalia .btn-accion {
+    border-color: #457b9d;
+    color: #1d3557;
+}
+
+.marco-natalia .btn-accion:hover {
+    background-color: #457b9d;
+    color: #ffffff;
+}
+
+.marco-natalia .meta-check-texto input[type="checkbox"] {
+    accent-color: #457b9d;
+}
+
+.marco-natalia .zzz-animada {
+    color: #457b9d;
+}
+
+/* MARCO DIEGO (ROJO FUEGO) */
+.marco-diego {
+    background-color: #fff0f0;
+    border: 4px solid #e63946;
+    box-shadow: 5px 5px 0px #780000;
+}
+
+.marco-diego .titulo-individual {
+    color: #780000;
+    font-size: 1.3rem;
+    margin-bottom: 18px;
+    text-align: center;
+    border-bottom: 2px dashed #e63946;
+    padding-bottom: 8px;
+}
+
+.marco-diego .renglon-agregar-indiv input {
+    border: 2px solid #e63946;
+}
+
+.marco-diego .renglon-agregar-indiv button {
+    background-color: #e63946;
+    border: 2px solid #780000;
+}
+
+.marco-diego .renglon-agregar-indiv button:hover {
+    background-color: #780000;
+}
+
+.marco-diego .contenido-meta {
+    border-color: #e63946;
+    box-shadow: 3px 3px 0px #ffb3b3;
+}
+
+.marco-diego .btn-accion {
+    border-color: #e63946;
+    color: #780000;
+}
+
+.marco-diego .btn-accion:hover {
+    background-color: #e63946;
+    color: #ffffff;
+}
+
+.marco-diego .meta-check-texto input[type="checkbox"] {
+    accent-color: #e63946;
+}
+
+.marco-diego .zzz-animada {
+    color: #e63946;
+}
+
+.renglon-agregar-indiv {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.renglon-agregar-indiv input {
+    flex-grow: 1;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-family: inherit;
+    outline: none;
+}
+
+.renglon-agregar-indiv button {
+    color: #fff;
+    padding: 8px 14px;
+    font-family: inherit;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+/* SECCIÓN JARDÍN */
+.subtitulo-jardin { text-align: center; color: #666; margin-bottom: 20px; }
+
 #grid-jardin {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 14px;
-    margin-top: 20px;
-}
-
-.tierra-vacia {
-    grid-column: 1 / -1;
-    background: #fdf0ed;
-    border: 2px dashed #d3a397;
-    border-radius: 12px;
-    padding: 30px;
-    color: #8d6e63;
+    background-color: #e8f5e9;
+    border: 3px solid #2a9d8f;
+    border-radius: 8px;
+    padding: 24px;
+    min-height: 250px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    box-shadow: 3px 3px 0px #b2dfdb;
 }
 
 .card-planta {
     background: #ffffff;
-    border: 2px solid #ffb6c1;
-    border-radius: 12px;
+    border: 3px solid #ff69b4;
+    border-radius: 8px;
     padding: 12px;
+    text-align: center;
+    width: 160px;
+    box-shadow: 3px 3px 0px #ffb6c1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    text-align: center;
-    min-height: 140px;
-    position: relative;
 }
 
-.card-semilla {
-    background: #fffdfa;
-    border-color: #d3a397;
+.card-semilla { border-color: #8d6e63; background-color: #fbe9e7; box-shadow: 3px 3px 0px #d7ccc8; }
+.animacion-florecer { animation: nacerFlor 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+
+@keyframes nacerFlor {
+    0% { transform: scale(0.3) rotate(-10deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
 }
 
-.flor-diego { border-color: #4ea8de !important; }
-.flor-natalia { border-color: #ff85a2 !important; }
-.flor-juntos { border-color: #ff69b4 !important; }
+/* DISTINCIÓN DE FLORES EN EL JARDÍN */
+.card-planta.flor-juntos {
+    border: 3px solid #ff69b4;
+    box-shadow: 3px 3px 0px #ffb6c1;
+}
+
+.card-planta.flor-natalia {
+    border: 3px solid #457b9d;
+    background-color: #f0f8ff;
+    box-shadow: 3px 3px 0px #1d3557;
+}
+
+.flor-natalia .badge-origen-meta { 
+    background-color: #e0f2fe; 
+    color: #1d3557; 
+}
+
+.card-planta.flor-diego {
+    border: 3px solid #e63946;
+    background-color: #fff0f0;
+    box-shadow: 3px 3px 0px #780000;
+}
+
+.flor-diego .badge-origen-meta { 
+    background-color: #ffb3b3; 
+    color: #780000; 
+}
 
 .badge-origen-meta {
     font-size: 0.65rem;
     padding: 2px 6px;
-    border-radius: 6px;
-    background: #f0f0f0;
-    color: #666;
+    border-radius: 4px;
     margin-top: 4px;
-}
-
-.sprite-pixel {
-    image-rendering: pixelated;
-}
-
-.animacion-florecer {
-    animation: popFlor 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-@keyframes popFlor {
-    0% { transform: scale(0.5); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-/* ==========================================
-   RECOMPENSAS Y TABLERO
-   ========================================== */
-#grid-recompensas {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 14px;
-    margin-top: 20px;
-}
-
-.card-recompensa {
-    background: #ffffff;
-    border: 2px solid #bc6c25;
-    border-radius: 12px;
-    padding: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    text-align: center;
-    min-height: 140px;
-}
-
-.card-recompensa.cumplida {
-    background: #f0fdf4;
-    border-color: #2a9d8f;
-}
-
-.btn-cumplir-recompensa {
-    background: #2a9d8f;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-family: 'Pixelify Sans', cursive;
-    cursor: pointer;
-    margin-top: 8px;
-}
-
-/* ==========================================
-   MODALES Y EFECTOS
-   ========================================== */
-.modal-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.5);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    padding: 15px;
-}
-
-.modal-overlay.activo {
-    display: flex;
-}
-
-.modal-contenido {
-    background: white;
-    border: 4px solid #ff69b4;
-    border-radius: 14px;
-    padding: 20px;
-    max-width: 400px;
-    width: 100%;
-    text-align: center;
-}
-
-.modal-especial {
-    border-color: #7209b7;
-}
-
-.modal-botones {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 15px;
-}
-
-.modal-botones button {
-    padding: 8px 14px;
-    border-radius: 8px;
-    border: none;
-    font-family: 'Pixelify Sans', cursive;
-    cursor: pointer;
-}
-
-#btn-guardar-modal {
-    background: #ff69b4;
-    color: white;
     font-weight: bold;
 }
 
-.opciones-encuesta {
+.flor-juntos .badge-origen-meta { 
+    background-color: #ffe4e1; 
+    color: #ff1493; 
+}
+
+/* PESTAÑA Y TABLERO DE RECOMPENSAS */
+#grid-recompensas {
+    background-color: #fefae0;
+    border: 3px solid #dda15e;
+    border-radius: 8px;
+    padding: 24px;
+    min-height: 250px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    box-shadow: 3px 3px 0px #bc6c25;
+}
+
+.card-recompensa {
+    background: #fff;
+    border: 3px dashed #dda15e;
+    border-radius: 8px;
+    padding: 16px;
+    width: 220px;
+    text-align: center;
+    box-shadow: 3px 3px 0px #dda15e;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin: 15px 0;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
 }
 
-.btn-opcion-modal {
-    background: #ffe6f0;
-    border: 2px solid #ff69b4;
-    border-radius: 8px;
-    padding: 10px;
-    font-family: 'Pixelify Sans', cursive;
+.card-recompensa.cumplida {
+    border-style: solid;
+    border-color: #2a9d8f;
+    background-color: #e8f5e9;
+    box-shadow: 3px 3px 0px #2a9d8f;
+}
+
+.btn-cumplir-recompensa {
+    background-color: #2a9d8f;
+    color: #fff;
+    border: 2px solid #1e7166;
+    padding: 6px 12px;
+    font-family: inherit;
+    font-size: 0.8rem;
     cursor: pointer;
-    text-align: left;
-}
-
-.btn-opcion-modal.btn-peligro {
-    background: #ffe5e5;
-    border-color: #ff4d4d;
-    color: #cc0000;
-}
-
-.btn-cancelar-secundario {
-    background: none;
-    border: none;
-    color: #888;
-    cursor: pointer;
+    border-radius: 4px;
     margin-top: 10px;
 }
 
-#input-editar-meta {
-    width: 100%;
-    padding: 10px;
-    border: 2px solid #ffb6c1;
-    border-radius: 8px;
-    font-family: 'Pixelify Sans', cursive;
-    margin-top: 10px;
+.btn-cumplir-recompensa:hover {
+    background-color: #1e7166;
 }
 
-/* CHISPAS DE PÍXEL */
-#contenedor-chispas {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    pointer-events: none;
-    z-index: 9999;
-}
+/* CHISPAS PÍXEL */
+#contenedor-chispas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; }
+.chispa-pixel { position: absolute; width: 8px; height: 8px; animation: volarChispa 0.6s forwards ease-out; }
 
-.chispa-pixel {
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    border-radius: 1px;
-    animation: animChispa 0.6s forwards ease-out;
-}
-
-@keyframes animChispa {
+@keyframes volarChispa {
     0% { transform: translate(0, 0) scale(1); opacity: 1; }
     100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
 }
 
+/* MODALES RETRO */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 999; }
+.modal-overlay.activo { display: flex; }
+.modal-contenido { background-color: #fff0f5; border: 5px solid #ff69b4; padding: 24px; border-radius: 8px; width: 90%; max-width: 440px; text-align: center; box-shadow: 4px 4px 0px #ff1493; }
+.modal-contenido h3 { color: #ff1493; margin-bottom: 16px; font-size: 1.1rem; }
+#input-editar-meta { width: 100%; padding: 10px; border: 2px solid #ff69b4; border-radius: 6px; font-family: inherit; margin-bottom: 16px; outline: none; }
+
+.modal-especial {
+    border-color: #e76f51 !important;
+    box-shadow: 0 0 0 4px #ffffff, 4px 4px 0px #e76f51 !important;
+}
+
+.opciones-encuesta { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+.btn-opcion-modal { background-color: #ffffff; color: #ff1493; border: 2px solid #ff69b4; padding: 10px; font-family: inherit; cursor: pointer; border-radius: 6px; transition: all 0.2s; }
+.btn-opcion-modal:hover { background-color: #ffb6c1; color: #ffffff; }
+.btn-opcion-modal.btn-peligro { border-color: #e63946; color: #e63946; }
+.btn-opcion-modal.btn-peligro:hover { background-color: #e63946; color: #ffffff; }
+.btn-cancelar-secundario { background: transparent; border: none; color: #888; cursor: pointer; font-family: inherit; text-decoration: underline; }
+
 /* ==========================================
-   ADAPTATIVO PARA CELULARES Y IPADS (MEDIA QUERIES)
+   REGLAS ADAPTATIVAS PARA IPAD Y CELULARES
    ========================================== */
 
 /* IPAD / TABLETS (Hasta 768px) */
 @media (max-width: 768px) {
     #marco-principal {
+        width: 100%;
         padding: 16px;
+        min-height: auto;
     }
 
     h1 {
-        font-size: 1.5rem;
+        font-size: 1.7rem;
     }
 
     .grid-individuales {
         grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    #cuadro-personajes-hp {
+        gap: 20px;
+        padding: 12px 16px;
     }
 }
 
 /* CELULARES (Hasta 480px) */
 @media (max-width: 480px) {
     body {
-        padding: 10px 5px;
+        padding: 8px;
     }
 
     #marco-principal {
         padding: 12px;
-        border-width: 3px;
+        border-width: 4px;
+        box-shadow: 0 0 0 2px #ffffff, 0 0 0 6px #ff1493;
     }
 
     h1 {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         margin-bottom: 12px;
     }
 
     h2 {
-        font-size: 0.95rem;
+        font-size: 1.2rem;
     }
 
-    /* Personajes arriba en columna para no apretar texto de HP */
+    /* Personajes arriba acomodados para que la barra HP no se rompa */
     #cuadro-personajes-hp {
         flex-direction: column;
-        gap: 12px;
-        padding: 10px;
+        align-items: center;
+        gap: 16px;
+        width: 100%;
+        padding: 12px;
     }
 
     .tarjeta-jugador {
         width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
     }
 
-    /* Pestañas táctiles fáciles de presionar */
+    .contenedor-avatar {
+        width: 70px;
+        height: 60px;
+    }
+
+    .sprite-avatar-grande {
+        height: 50px !important;
+    }
+
+    .hp-box {
+        width: 140px;
+    }
+
+    /* Pestañas táctiles ordenadas */
     #navegacion-pestanas {
-        gap: 6px;
+        gap: 8px;
     }
 
     .tab-btn {
         font-size: 0.85rem;
-        padding: 8px 10px;
-        flex: 1 1 42%; /* Coloca 2 botones por fila en teléfonos */
+        padding: 8px 12px;
+        flex: 1 1 45%;
         text-align: center;
     }
 
-    /* Renglón de agregar metas en vertical si el texto es largo */
-    .renglon-agregar .contenido-meta, .renglon-agregar-indiv {
-        flex-direction: column;
+    /* Renglones de metas responsivos */
+    .contenido-meta {
+        padding: 12px;
     }
 
-    .renglon-agregar button, .renglon-agregar-indiv button {
+    .meta-check-texto label {
+        font-size: 0.95rem;
+    }
+
+    .renglon-agregar .contenido-meta {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #nueva-meta-input {
+        margin-right: 0;
         width: 100%;
     }
 
-    /* Ajuste de tarjetas del jardín y recompensas */
+    #btn-agregar {
+        width: 100%;
+    }
+
+    .renglon-agregar-indiv {
+        flex-direction: column;
+    }
+
+    .renglon-agregar-indiv button {
+        width: 100%;
+    }
+
+    /* Tarjetas del jardín y recompensas adaptadas al ancho */
     #grid-jardin, #grid-recompensas {
-        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-        gap: 10px;
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .card-planta {
+        width: 135px;
+        padding: 8px;
+    }
+
+    .card-recompensa {
+        width: 100%;
     }
 }

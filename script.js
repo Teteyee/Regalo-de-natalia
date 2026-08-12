@@ -1,6 +1,6 @@
 // CONEXIÓN A SUPABASE
 const SUPABASE_URL = "https://txecerymvnfonhlsjiar.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR4ZWNlcnltdm5mb25obHNqaWFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0MDg4NzYsImV4cCI6MjEwMTk4NDg3Nn0.VvFYibG2WxBgD5fM7J5zVhL7WnMghUy1EEglCyOAxA4";
+const SUPABASE_ANON_KEY = "eyJhYmdjaW9iIJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR4ZWNlcnltdm5mb25obHNqaWFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjM0NDg3Nn0.VvFYibG2WxBgD5fM7J5zVhL7WnMghUy1EEglCyOAxA4";
 
 const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -20,18 +20,18 @@ const todasLasMascotas = [...mascotasNatalia, ...mascotasDiego];
 
 // FLORES Y SEMILLA
 const listaFlores = [
-    "imagenes/Flower_1/Flower 1 - COLORFUL.png", "imagenes/Flower_1/Flower 1 - BLUE.png", "imagenes/Flower_1/Flower 1 - RED.png",
-    "imagenes/Flower_1/Flower 1 - TEAL.png", "imagenes/Flower_1/Flower 1 - YELLOW.png", "imagenes/Flower_2/Flower 2 - MAGENTA.png",
-    "imagenes/Flower_2/Flower 2 - PINK.png", "imagenes/Flower_2/Flower 2 - PURPLE.png", "imagenes/Flower_2/Flower 2 - TEAL.png",
-    "imagenes/Flower_5/Flower 5 - BLUE.png", "imagenes/Flower_5/Flower 5 - ORANGE.png", "imagenes/Flower_5/Flower 5 - PINK.png",
-    "imagenes/Flower_5/Flower 5 - PURPLE.png", "imagenes/Flower_6/Flower 6 - BLUE.png", "imagenes/Flower_6/Flower 6 - ORANGE.png",
-    "imagenes/Flower_6/Flower 6 - PINK.png", "imagenes/Flower_6/Flower 6 - PINK 2.png", "imagenes/Flower_6/Flower 6 - PURPLE.png",
-    "imagenes/Flower_7/Flower 7 - BLUE.png", "imagenes/Flower_7/Flower 7 - ORANGE.png", "imagenes/Flower_7/Flower 7 - PINK.png",
-    "imagenes/Flower_7/Flower 7 - PINK 2.png", "imagenes/Flower_7/Flower 7 - PURPLE.png", "imagenes/Flower_8/Flower 8 - ORANGE.png",
-    "imagenes/Flower_8/Flower 8 - PINK.png", "imagenes/Flower_8/Flower 8 - RED.png", "imagenes/Flower_8/Flower 8 - YELLOW.png",
-    "imagenes/Flower_9/Flower 9 - ORANGE.png", "imagenes/Flower_9/Flower 9 - PURPLE.png", "imagenes/Flower_9/Flower 9 - RED.png",
-    "imagenes/Flower_9/Flower 9 - YELLOW.png", "imagenes/Flower_13/Flower 13 - COLORFUL.png", "imagenes/Flower_13/Flower 13 - PINK.png",
-    "imagenes/Flower_13/Flower 13 - PURPLE.png", "imagenes/Flower_13/Flower 13 - YELLOW.png"
+    "Flower_1/Flower 1 - COLORFUL.png", "Flower_1/Flower 1 - BLUE.png", "Flower_1/Flower 1 - RED.png",
+    "Flower_1/Flower 1 - TEAL.png", "Flower_1/Flower 1 - YELLOW.png", "Flower_2/Flower 2 - MAGENTA.png",
+    "Flower_2/Flower 2 - PINK.png", "Flower_2/Flower 2 - PURPLE.png", "Flower_2/Flower 2 - TEAL.png",
+    "Flower_5/Flower 5 - BLUE.png", "Flower_5/Flower 5 - ORANGE.png", "Flower_5/Flower 5 - PINK.png",
+    "Flower_5/Flower 5 - PURPLE.png", "Flower_6/Flower 6 - BLUE.png", "Flower_6/Flower 6 - ORANGE.png",
+    "Flower_6/Flower 6 - PINK.png", "Flower_6/Flower 6 - PINK 2.png", "Flower_6/Flower 6 - PURPLE.png",
+    "Flower_7/Flower 7 - BLUE.png", "Flower_7/Flower 7 - ORANGE.png", "Flower_7/Flower 7 - PINK.png",
+    "Flower_7/Flower 7 - PINK 2.png", "Flower_7/Flower 7 - PURPLE.png", "Flower_8/Flower 8 - ORANGE.png",
+    "Flower_8/Flower 8 - PINK.png", "Flower_8/Flower 8 - RED.png", "Flower_8/Flower 8 - YELLOW.png",
+    "Flower_9/Flower 9 - ORANGE.png", "Flower_9/Flower 9 - PURPLE.png", "Flower_9/Flower 9 - RED.png",
+    "Flower_9/Flower 9 - YELLOW.png", "Flower_13/Flower 13 - COLORFUL.png", "Flower_13/Flower 13 - PINK.png",
+    "Flower_13/Flower 13 - PURPLE.png", "Flower_13/Flower 13 - YELLOW.png"
 ];
 
 const imagenSemilla = "imagenes/Semilla.png";
