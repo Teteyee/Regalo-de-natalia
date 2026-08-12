@@ -598,3 +598,58 @@ h2 { font-size: 1.6rem; margin-bottom: 20px; color: #ff1493; text-align: center;
 .btn-opcion-modal.btn-peligro { border-color: #e63946; color: #e63946; }
 .btn-opcion-modal.btn-peligro:hover { background-color: #e63946; color: #ffffff; }
 .btn-cancelar-secundario { background: transparent; border: none; color: #888; cursor: pointer; font-family: inherit; text-decoration: underline; }
+
+/* ==========================================
+   AJUSTES RESPONSIVOS PARA CELULARES Y IPAD
+   ========================================== */
+@media (max-width: 768px) {
+    body {
+        padding: 8px;
+    }
+
+    #marco-principal {
+        width: 100%;
+        padding: 14px;
+        min-height: auto;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    #cuadro-personajes-hp {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        width: 100%;
+        padding: 12px;
+    }
+
+    .tarjeta-jugador {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .grid-individuales {
+        grid-template-columns: 1fr;
+    }
+
+    .renglon-agregar .contenido-meta, .renglon-agregar-indiv {
+        flex-direction: column;
+    }
+
+    #nueva-meta-input {
+        margin-right: 0;
+        margin-bottom: 8px;
+    }
+
+    #btn-agregar, .renglon-agregar-indiv button {
+        width: 100%;
+    }
+
+    .card-recompensa {
+        width: 100%;
+    }
+}
