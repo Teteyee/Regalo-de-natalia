@@ -496,7 +496,7 @@ function renderizarRecompensas() {
     if (!grid) return;
 
     if (listaRecompensas.length === 0) {
-        grid.innerHTML = `<p style="color: #bc6c25;">📜 No hay recompensas pendiente.</p>`;
+        grid.innerHTML = `<p style="color: #bc6c25;">📜 No hay recompensas pendientes.</p>`;
         return;
     }
 
