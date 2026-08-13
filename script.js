@@ -1,10 +1,9 @@
-// CONEXIÓN A SUPABASE
 const SUPABASE_URL = "https://txecerymvnfonhlsjiar.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhYmdjaW9iIJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR4ZWNlcnltdm5mb25obHNqaWFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjM0NDg3Nn0.VvFYibG2WxBgD5fM7J5zVhL7WnMghUy1EEglCyOAxA4";
 
 const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// CLASIFICACIÓN Y ORDEN DE MASCOTAS
+// Mascotas y orden
 const mascotasDiego = [
     { nombre: "Loki", ruta: "imagenes/Loki.png" }
 ];
@@ -18,7 +17,7 @@ const mascotasNatalia = [
 
 const todasLasMascotas = [...mascotasNatalia, ...mascotasDiego];
 
-// FLORES Y SEMILLA
+// flores
 const listaFlores = [
     "Flower_1/Flower 1 - COLORFUL.png", "Flower_1/Flower 1 - BLUE.png", "Flower_1/Flower 1 - RED.png",
     "Flower_1/Flower 1 - TEAL.png", "Flower_1/Flower 1 - YELLOW.png", "Flower_2/Flower 2 - MAGENTA.png",
@@ -139,7 +138,7 @@ function suscribirseACambiosEnTiempoReal() {
         .subscribe();
 }
 
-// BARRAS DE VIDA (HP)
+// barras de vida
 function actualizarBarrasHP() {
     const fillDiego = document.getElementById('hp-fill-diego');
     const textoDiego = document.getElementById('hp-texto-diego');
@@ -204,7 +203,7 @@ async function reducirHP(persona, puntos) {
     await guardarHPEnSupabase();
 }
 
-// METAS
+// Metas
 async function agregarMetaJuntos() {
     const input = document.getElementById('nueva-meta-input');
     if (!input) return;
@@ -327,7 +326,7 @@ function cerrarModalBorrar() {
     tipoMetaEnBorrado = null;
 }
 
-// RECOMPENSAS
+// Recompensas
 function abrirModalCanje(quienMurio) {
     const modal = document.getElementById('modal-recompensa-muerte');
     const titulo = document.getElementById('titulo-modal-muerte');
@@ -492,7 +491,7 @@ function renderizarRecompensas() {
     if (!grid) return;
 
     if (listaRecompensas.length === 0) {
-        grid.innerHTML = `<p style="color: #bc6c25;">📜 No hay recompensas pendientes. ¡Pórtense bien!</p>`;
+        grid.innerHTML = `<p style="color: #bc6c25;">📜 No hay recompensas pendientes.</p>`;
         return;
     }
 
