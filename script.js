@@ -174,7 +174,21 @@ async function agregarXP(puntos) {
     if (nuevoXP >= 100) {
         nuevoNivel += Math.floor(nuevoXP / 100);
         nuevoXP = nuevoXP % 100;
+        
         lanzarLluviaChispas();
+
+        // desbloqueo de cofre al subir de nivel
+        const valeAzar = catalogoValesAmor[Math.floor(Math.random() * catalogoValesAmor.length)];
+        await desbloquearValeAmor(valeAzar);
+
+        const tituloModal = document.getElementById('titulo-modal-cumplir');
+        const textoRecompensa = document.getElementById('texto-recompensa-desbloqueada');
+        
+        if (tituloModal) tituloModal.innerText = `¡SUBIERON A NIVEL ${nuevoNivel}! 🎉✨`;
+        if (textoRecompensa) textoRecompensa.innerText = `Desbloquearon: "${valeAzar}"`;
+        
+        const modalCumplir = document.getElementById('modal-cumplir-meta');
+        if (modalCumplir) modalCumplir.classList.add('activo');
     }
 
     estadoNivel.nivel = nuevoNivel;
@@ -226,6 +240,42 @@ async function agregarMetaIndividual(dueno) {
     await _supabase.from('metas').insert([nuevaMeta]);
 }
 
+// LÓGICA DE NIVEL Y XP (AQUÍ SE DESBLOQUEA EL COFRE AL SUBIR DE NIVEL)
+async function agregarXP(puntos) {
+    let nuevoXP = estadoNivel.xp + puntos;
+    let nuevoNivel = estadoNivel.nivel;
+
+    // Solo si alcanza o supera los 100 XP se sube de nivel y se gana el vale
+    if (nuevoXP >= 100) {
+        nuevoNivel += Math.floor(nuevoXP / 100);
+        nuevoXP = nuevoXP % 100;
+        
+        lanzarLluviaChispas();
+
+        // 🎁 DESBLOQUEAR COFRE DE VALE DE AMOR AL SUBIR DE NIVEL
+        const valeAzar = catalogoValesAmor[Math.floor(Math.random() * catalogoValesAmor.length)];
+        await desbloquearValeAmor(valeAzar);
+
+        const tituloModal = document.getElementById('titulo-modal-cumplir');
+        const textoRecompensa = document.getElementById('texto-recompensa-desbloqueada');
+        
+        if (tituloModal) tituloModal.innerText = `¡SUBIERON A NIVEL ${nuevoNivel}! 🎉✨`;
+        if (textoRecompensa) textoRecompensa.innerText = `Desbloquearon: "${valeAzar}"`;
+        
+        const modalCumplir = document.getElementById('modal-cumplir-meta');
+        if (modalCumplir) modalCumplir.classList.add('activo');
+    }
+
+    estadoNivel.nivel = nuevoNivel;
+    estadoNivel.xp = nuevoXP;
+    actualizarInterfazNivel();
+
+    await _supabase.from('estado_jugadores').update({
+        diego_hp: estadoNivel.nivel,
+        natalia_hp: estadoNivel.xp
+    }).eq('id', 'partida_principal');
+}
+
 async function toggleMeta(tipo, id, event) {
     let lista = obtenerListaPorTipo(tipo);
     const meta = lista.find(m => m.id === id);
@@ -240,15 +290,6 @@ async function toggleMeta(tipo, id, event) {
 
         if (tipo === 'juntos') {
             await agregarXP(25);
-            // vale al azar
-            const valeAzar = catalogoValesAmor[Math.floor(Math.random() * catalogoValesAmor.length)];
-            await desbloquearValeAmor(valeAzar);
-
-            const textoRecompensa = document.getElementById('texto-recompensa-desbloqueada');
-            if (textoRecompensa) textoRecompensa.innerText = `Desbloquearon: "${valeAzar}"`;
-            
-            const modalCumplir = document.getElementById('modal-cumplir-meta');
-            if (modalCumplir) modalCumplir.classList.add('activo');
         } else {
             await agregarXP(15);
         }
