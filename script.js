@@ -41,7 +41,7 @@ const catalogoValesAmor = [
     " Día de pedir pizza y ver películas juntos.",
     " Tarde de juegos de mesa o videojuegos juntos.",
     " Tarde de spa en casa",
-    " Vale por un helado / postrecito al salir",
+    " Vale por un helado / postrecito",
     " Día de flojera: maratón de series en cama todo el día",
     " Picnic en un parque o jardín con mantita y comida rica.",
     " Tarde de escuchar música juntos",
