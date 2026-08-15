@@ -6,6 +6,7 @@
     padding: 0;
 }
 
+/* fondo */
 body {
     background-color: #ffb6c1;
     background-image: 
@@ -24,7 +25,7 @@ body {
     padding: 15px;
 }
 
-/* marco */
+/* marco*/
 #marco-principal {
     background-color: #fff0f5;
     border: 6px solid #ff69b4;
@@ -50,18 +51,19 @@ h1 {
     text-shadow: 2px 2px 0px #ffffff; 
 }
 
-/* avatares y barras de vida */
+/* avatares y barra de xp*/
 #cuadro-personajes-hp {
     display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    gap: 40px;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
     background-color: #ffffff;
     border: 4px solid #ff69b4;
     padding: 16px 24px;
-    width: fit-content;
+    width: 100%;
+    max-width: 680px;
     margin: 0 auto 20px auto;
-    border-radius: 8px;
+    border-radius: 12px;
     box-shadow: 4px 4px 0px #ffb6c1;
 }
 
@@ -69,38 +71,69 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
+    flex-shrink: 0;
 }
 
 .contenedor-avatar {
     position: relative;
-    width: 90px;
-    height: 75px;
+    width: 80px;
+    height: 70px;
     display: flex;
     justify-content: center;
     align-items: flex-end;
 }
 
-/* tamaño de las skins dañadas */
 .sprite-avatar-grande {
-    height: 65px !important;
+    height: 60px !important;
     width: auto;
-    max-width: 90px;
+    max-width: 80px;
     object-fit: contain;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
     transition: transform 0.2s;
 }
 
+.nombre-jugador {
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #ff1493;
+}
+
 .badge-estado {
     position: absolute;
-    top: -5px;
-    right: -5px;
-    font-size: 1.2rem;
+    top: -6px;
+    right: -6px;
+    font-size: 1.1rem;
+    animation: flotarBadge 1.5s infinite ease-in-out;
+}
+
+@keyframes flotarBadge {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+/* bloque del nivel*/
+#bloque-nivel-central {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    max-width: 320px;
+}
+
+.nivel-badge-titulo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 1.15rem;
+    font-weight: bold;
+    color: #ff1493;
+    margin-bottom: 6px;
 }
 
 .hp-box {
-    width: 130px;
+    width: 100%;
 }
 
 .hp-info {
@@ -114,24 +147,27 @@ h1 {
 
 .hp-bar-fondo {
     width: 100%;
-    height: 14px;
+    height: 16px;
     background-color: #e0e0e0;
     border: 2px solid #ff69b4;
-    border-radius: 4px;
+    border-radius: 8px;
     overflow: hidden;
 }
 
 .hp-bar-fill {
     height: 100%;
-    background: linear-gradient(90deg, #2a9d8f, #21867a);
-    transition: width 0.4s ease, background-color 0.4s ease;
+    background: linear-gradient(90deg, #ff69b4, #ff1493);
+    transition: width 0.5s ease;
 }
 
-.hp-bar-fill.hp-bajo {
-    background: linear-gradient(90deg, #e63946, #d62828) !important;
+.frase-nivel {
+    font-size: 0.7rem;
+    color: #888;
+    margin-top: 6px;
+    text-align: center;
 }
 
-/* navegacion y pestañas */
+/* navegacion de pestañas */
 #navegacion-pestanas { 
     display: flex; 
     justify-content: center; 
@@ -143,11 +179,11 @@ h1 {
     background-color: #ffffff;
     color: #ff1493;
     border: 3px solid #ff69b4;
-    padding: 10px 20px;
+    padding: 10px 18px;
     font-family: inherit;
     font-size: 0.95rem;
     cursor: pointer;
-    border-radius: 6px;
+    border-radius: 8px;
     transition: all 0.2s ease;
     box-shadow: 2px 2px 0px #ff69b4;
 }
@@ -189,7 +225,7 @@ h1 {
 .contenido-pestana.activa { display: block; }
 h2 { font-size: 1.6rem; margin-bottom: 20px; color: #ff1493; text-align: center; }
 
-/* lista de metas */
+/* lista de metas y renglones*/
 .lista-vertical { 
     display: flex; 
     flex-direction: column; 
@@ -205,7 +241,7 @@ h2 { font-size: 1.6rem; margin-bottom: 20px; color: #ff1493; text-align: center;
     margin-top: 15px; 
 }
 
-/* CICLO DE ANIMACIÓN DE MASCOTAS (DUERMEN EN INICIO 30s -> 2 VUELTAS -> REPITEN) */
+/* animacion de mascotas*/
 .mascota-libre-marco {
     position: absolute;
     top: -42px;
@@ -254,17 +290,6 @@ h2 { font-size: 1.6rem; margin-bottom: 20px; color: #ff1493; text-align: center;
     100% { transform: translateY(-16px) scale(0.8); opacity: 0; }
 }
 
-/* ANIMACIÓN DE CAÍDA AL VACÍO AL BORRAR */
-.mascota-caer-vacio {
-    animation: caerAlVacio 0.8s forwards ease-in !important;
-}
-
-@keyframes caerAlVacio {
-    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-    30% { transform: translateY(-15px) rotate(-15deg); }
-    100% { transform: translateY(120px) rotate(90deg); opacity: 0; }
-}
-
 .contenido-meta {
     background-color: #ffffff;
     border: 3px solid #ff69b4;
@@ -299,7 +324,7 @@ h2 { font-size: 1.6rem; margin-bottom: 20px; color: #ff1493; text-align: center;
 #btn-agregar { background-color: #ff69b4; color: #fff; border: 2px solid #ff1493; padding: 10px 18px; font-family: inherit; cursor: pointer; border-radius: 6px; transition: all 0.2s; }
 #btn-agregar:hover { background-color: #2a9d8f; border-color: #1e7166; transform: scale(1.03); }
 
-/* metas individuales */
+/* metas individuales*/
 .grid-individuales {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -313,7 +338,7 @@ h2 { font-size: 1.6rem; margin-bottom: 20px; color: #ff1493; text-align: center;
     transition: transform 0.2s;
 }
 
-/* Marco de natalia) */
+/* marco de natalia*/
 .marco-natalia {
     background-color: #f0f8ff;
     border: 4px solid #457b9d;
@@ -365,7 +390,7 @@ h2 { font-size: 1.6rem; margin-bottom: 20px; color: #ff1493; text-align: center;
     color: #457b9d;
 }
 
-/* Marco de diego */
+/* marco de diego */
 .marco-diego {
     background-color: #fff0f0;
     border: 4px solid #e63946;
@@ -440,7 +465,7 @@ h2 { font-size: 1.6rem; margin-bottom: 20px; color: #ff1493; text-align: center;
     transition: all 0.2s;
 }
 
-/* jardin */
+/* SECCIÓN JARDÍN */
 .subtitulo-jardin { text-align: center; color: #666; margin-bottom: 20px; }
 
 #grid-jardin {
@@ -477,7 +502,7 @@ h2 { font-size: 1.6rem; margin-bottom: 20px; color: #ff1493; text-align: center;
     100% { transform: scale(1) rotate(0deg); opacity: 1; }
 }
 
-/* Distincion de flores */
+/* distincion de flores */
 .card-planta.flor-juntos {
     border: 3px solid #ff69b4;
     box-shadow: 3px 3px 0px #ffb6c1;
@@ -518,10 +543,10 @@ h2 { font-size: 1.6rem; margin-bottom: 20px; color: #ff1493; text-align: center;
     color: #ff1493; 
 }
 
-/* recompensas */
+/* pestaña de recompensas y vales */
 #grid-recompensas {
-    background-color: #fefae0;
-    border: 3px solid #dda15e;
+    background-color: #fff0f5;
+    border: 3px solid #ff69b4;
     border-radius: 8px;
     padding: 24px;
     min-height: 250px;
@@ -529,17 +554,17 @@ h2 { font-size: 1.6rem; margin-bottom: 20px; color: #ff1493; text-align: center;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
-    box-shadow: 3px 3px 0px #bc6c25;
+    box-shadow: 3px 3px 0px #ffb6c1;
 }
 
 .card-recompensa {
-    background: #fff;
-    border: 3px dashed #dda15e;
-    border-radius: 8px;
+    background: #ffffff;
+    border: 3px dashed #ff69b4;
+    border-radius: 12px;
     padding: 16px;
     width: 220px;
     text-align: center;
-    box-shadow: 3px 3px 0px #dda15e;
+    box-shadow: 3px 3px 0px #ffb6c1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -555,22 +580,26 @@ h2 { font-size: 1.6rem; margin-bottom: 20px; color: #ff1493; text-align: center;
 }
 
 .btn-cumplir-recompensa {
-    background-color: #2a9d8f;
+    background-color: #ff69b4;
     color: #fff;
-    border: 2px solid #1e7166;
-    padding: 6px 12px;
+    border: 2px solid #ff1493;
+    padding: 8px 14px;
     font-family: inherit;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
+    font-weight: bold;
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: 6px;
     margin-top: 10px;
+    transition: all 0.2s ease;
 }
 
 .btn-cumplir-recompensa:hover {
-    background-color: #1e7166;
+    background-color: #2a9d8f;
+    border-color: #1e7166;
+    transform: scale(1.04);
 }
 
-/* CHISPAS PÍXEL */
+/* chispas */
 #contenedor-chispas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; }
 .chispa-pixel { position: absolute; width: 8px; height: 8px; animation: volarChispa 0.6s forwards ease-out; }
 
@@ -579,16 +608,37 @@ h2 { font-size: 1.6rem; margin-bottom: 20px; color: #ff1493; text-align: center;
     100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
 }
 
-/* MODALES RETRO */
+/* retro */
 .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 999; }
 .modal-overlay.activo { display: flex; }
 .modal-contenido { background-color: #fff0f5; border: 5px solid #ff69b4; padding: 24px; border-radius: 8px; width: 90%; max-width: 440px; text-align: center; box-shadow: 4px 4px 0px #ff1493; }
-.modal-contenido h3 { color: #ff1493; margin-bottom: 16px; font-size: 1.1rem; }
+.modal-contenido h3 { color: #ff1493; margin-bottom: 12px; font-size: 1.2rem; }
 #input-editar-meta { width: 100%; padding: 10px; border: 2px solid #ff69b4; border-radius: 6px; font-family: inherit; margin-bottom: 16px; outline: none; }
 
 .modal-especial {
-    border-color: #e76f51 !important;
-    box-shadow: 0 0 0 4px #ffffff, 4px 4px 0px #e76f51 !important;
+    border-color: #ff69b4 !important;
+    box-shadow: 0 0 0 4px #ffffff, 4px 4px 0px #ff1493 !important;
+}
+
+.modal-botones {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.modal-botones button {
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: none;
+    font-family: inherit;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#btn-guardar-modal {
+    background-color: #ff69b4;
+    color: white;
+    border: 2px solid #ff1493;
 }
 
 .opciones-encuesta { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
@@ -596,7 +646,7 @@ h2 { font-size: 1.6rem; margin-bottom: 20px; color: #ff1493; text-align: center;
 .btn-opcion-modal:hover { background-color: #ffb6c1; color: #ffffff; }
 .btn-opcion-modal.btn-peligro { border-color: #e63946; color: #e63946; }
 .btn-opcion-modal.btn-peligro:hover { background-color: #e63946; color: #ffffff; }
-.btn-cancelar-secundario { background: transparent; border: none; color: #888; cursor: pointer; font-family: inherit; text-decoration: underline; }
+.btn-cancelar-secundario { background: transparent; border: none; color: #888; cursor: pointer; font-family: inherit; text-decoration: underline; padding: 10px; }
 
 
 @media (max-width: 768px) {
@@ -617,20 +667,18 @@ h2 { font-size: 1.6rem; margin-bottom: 20px; color: #ff1493; text-align: center;
     #cuadro-personajes-hp {
         flex-direction: column;
         align-items: center;
-        gap: 16px;
-        width: 100%;
-        padding: 12px;
+        gap: 14px;
+        padding: 14px;
     }
 
-    .tarjeta-jugador {
+    #bloque-nivel-central {
         width: 100%;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
+        max-width: 100%;
     }
 
     .grid-individuales {
         grid-template-columns: 1fr;
+        gap: 20px;
     }
 
     .renglon-agregar .contenido-meta, .renglon-agregar-indiv {

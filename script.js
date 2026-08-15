@@ -1,6 +1,6 @@
 // CONEXIÓN A SUPABASE
 const SUPABASE_URL = "https://txecerymvnfonhlsjiar.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR4ZWNlcnltdm5mb25obHNqaWFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0MDg4NzYsImV4cCI6MjEwMTk4NDg3Nn0.VvFYibG2WxBgD5fM7J5zVhL7WnMghUy1EEglCyOAxA4";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR4ZWNlcnltdm5mb25obHNqaWFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjM0NDg3Nn0.VvFYibG2WxBgD5fM7J5zVhL7WnMghUy1EEglCyOAxA4";
 
 const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -36,8 +36,21 @@ const listaFlores = [
 
 const imagenSemilla = "imagenes/Semilla.png";
 
-// VARIABLES DE ESTADO EN MEMORIA
-let hpData = { diego: 100, natalia: 100 };
+// vales
+const catalogoValesAmor = [
+    " Día de pedir pizza y ver películas juntos.",
+    " Tarde de juegos de mesa o videojuegos juntos.",
+    " Tarde de spa en casa",
+    " Vale por un helado / postrecito al salir",
+    " Día de flojera: maratón de series en cama todo el día",
+    " Picnic en un parque o jardín con mantita y comida rica.",
+    " Tarde de escuchar música juntos",
+    "Preparar juntos una receta de comida",
+    
+];
+
+
+let estadoNivel = { nivel: 1, xp: 0 };
 let listaRecompensas = [];
 let metasJuntos = [];
 let metasDiego = [];
@@ -45,23 +58,19 @@ let metasNatalia = [];
 
 let metaIdEnEdicion = null;
 let metaIdEnBorrado = null;
-let tipoMetaEnBorrado = null;
-let metaIdCumpliendo = null;
-let tipoMetaCumpliendo = null;
 
-
+// INICIALIZACIÓN
 document.addEventListener('DOMContentLoaded', async () => {
-    // Dibujar interfaz inmediatamente
-    actualizarBarrasHP();
+    actualizarInterfazNivel();
     renderizarTodasLasMetas();
     renderizarJardin();
     renderizarRecompensas();
 
-    // Cargar datos reales y escuchar cambios
     await cargarDatosDesdeSupabase();
     suscribirseACambiosEnTiempoReal();
 
-    document.getElementById('btn-guardar-modal').addEventListener('click', guardarEdicionModal);
+    const btnGuardar = document.getElementById('btn-guardar-modal');
+    if (btnGuardar) btnGuardar.addEventListener('click', guardarEdicionModal);
 });
 
 function cambiarPestana(idPestana, botonSeleccionado) {
@@ -73,18 +82,17 @@ function cambiarPestana(idPestana, botonSeleccionado) {
     if (botonSeleccionado) botonSeleccionado.classList.add('activo');
 }
 
-// CARGAR DATOS
+// CARGAR DATOS DESDE SUPABASE
 async function cargarDatosDesdeSupabase() {
     try {
-        // 1. Cargar HP
+        // 1. Cargar Nivel / XP (usa la tabla estado_jugadores: diego_hp = nivel, natalia_hp = xp)
         const { data: estado } = await _supabase.from('estado_jugadores').select('*').eq('id', 'partida_principal').maybeSingle();
         if (estado) {
-            hpData.diego = estado.diego_hp;
-            hpData.natalia = estado.natalia_hp;
-            actualizarBarrasHP();
+            estadoNivel.nivel = estado.diego_hp || 1;
+            estadoNivel.xp = estado.natalia_hp || 0;
+            actualizarInterfazNivel();
         } else {
-            // Si la fila no existe, crearla
-            await _supabase.from('estado_jugadores').insert([{ id: 'partida_principal', diego_hp: 100, natalia_hp: 100 }]);
+            await _supabase.from('estado_jugadores').insert([{ id: 'partida_principal', diego_hp: 1, natalia_hp: 0 }]);
         }
 
         // 2. Cargar Metas
@@ -95,7 +103,7 @@ async function cargarDatosDesdeSupabase() {
             metasNatalia = metas.filter(m => m.tipo === 'natalia');
         }
 
-        // 3. Cargar Recompensas
+        // 3. Cargar Vales de Amor (Recompensas)
         const { data: recompensas } = await _supabase.from('recompensas').select('*');
         if (recompensas) {
             listaRecompensas = recompensas;
@@ -109,14 +117,14 @@ async function cargarDatosDesdeSupabase() {
     }
 }
 
-// tiempo real
+// TIEMPO REAL
 function suscribirseACambiosEnTiempoReal() {
     _supabase.channel('cambios-juego')
         .on('postgres_changes', { event: '*', schema: 'public', table: 'estado_jugadores' }, payload => {
             if (payload.new) {
-                hpData.diego = payload.new.diego_hp;
-                hpData.natalia = payload.new.natalia_hp;
-                actualizarBarrasHP();
+                estadoNivel.nivel = payload.new.diego_hp || 1;
+                estadoNivel.xp = payload.new.natalia_hp || 0;
+                actualizarInterfazNivel();
             }
         })
         .on('postgres_changes', { event: '*', schema: 'public', table: 'metas' }, async () => {
@@ -139,69 +147,44 @@ function suscribirseACambiosEnTiempoReal() {
         .subscribe();
 }
 
-// barras de vida
-function actualizarBarrasHP() {
-    const fillDiego = document.getElementById('hp-fill-diego');
-    const textoDiego = document.getElementById('hp-texto-diego');
-    const imgDiego = document.getElementById('avatar-diego');
-    const badgeDiego = document.getElementById('badge-diego');
+// logica de nivel
+function actualizarInterfazNivel() {
+    const textoNivel = document.getElementById('texto-nivel');
+    const xpTexto = document.getElementById('xp-texto');
+    const xpFill = document.getElementById('xp-fill-barra');
+    const fraseRacha = document.getElementById('frase-racha');
 
-    const fillNatalia = document.getElementById('hp-fill-natalia');
-    const textoNatalia = document.getElementById('hp-texto-natalia');
-    const imgNatalia = document.getElementById('avatar-natalia');
-    const badgeNatalia = document.getElementById('badge-natalia');
+    if (!textoNivel || !xpTexto || !xpFill) return;
 
-    if (!fillDiego || !fillNatalia) return;
+    textoNivel.innerText = `Nivel ${estadoNivel.nivel}`;
+    xpTexto.innerText = `${estadoNivel.xp} / 100 XP`;
+    xpFill.style.width = `${Math.min(100, estadoNivel.xp)}%`;
 
-    fillDiego.style.width = `${hpData.diego}%`;
-    textoDiego.innerText = `${hpData.diego}/100 HP`;
-    if (hpData.diego <= 40) {
-        fillDiego.classList.add('hp-bajo');
-        badgeDiego.innerText = '🩹';
-        imgDiego.src = 'imagenes/Diegodañado.png';
-    } else {
-        fillDiego.classList.remove('hp-bajo');
-        badgeDiego.innerText = '';
-        imgDiego.src = 'imagenes/Diego.png';
-    }
-
-    fillNatalia.style.width = `${hpData.natalia}%`;
-    textoNatalia.innerText = `${hpData.natalia}/100 HP`;
-    if (hpData.natalia <= 40) {
-        fillNatalia.classList.add('hp-bajo');
-        badgeNatalia.innerText = '🩹';
-        imgNatalia.src = 'imagenes/Nataliadañada.png';
-    } else {
-        fillNatalia.classList.remove('hp-bajo');
-        badgeNatalia.innerText = '';
-        imgNatalia.src = 'imagenes/Natalia.png';
+    if (fraseRacha) {
+        if (estadoNivel.nivel === 1) fraseRacha.innerText = "¡Comiencen a cumplir metas para subir de nivel!";
+        else if (estadoNivel.nivel < 5) fraseRacha.innerText = "🌸 ¡Construyendo recuerdos juntos!";
+        else fraseRacha.innerText = "✨ ¡Pareja legendaria imparable!";
     }
 }
 
-async function guardarHPEnSupabase() {
+async function agregarXP(puntos) {
+    let nuevoXP = estadoNivel.xp + puntos;
+    let nuevoNivel = estadoNivel.nivel;
+
+    if (nuevoXP >= 100) {
+        nuevoNivel += Math.floor(nuevoXP / 100);
+        nuevoXP = nuevoXP % 100;
+        lanzarLluviaChispas();
+    }
+
+    estadoNivel.nivel = nuevoNivel;
+    estadoNivel.xp = nuevoXP;
+    actualizarInterfazNivel();
+
     await _supabase.from('estado_jugadores').update({
-        diego_hp: hpData.diego,
-        natalia_hp: hpData.natalia
+        diego_hp: estadoNivel.nivel,
+        natalia_hp: estadoNivel.xp
     }).eq('id', 'partida_principal');
-}
-
-async function sumarHP(persona, puntos) {
-    if (persona === 'diego') hpData.diego = Math.min(100, hpData.diego + puntos);
-    if (persona === 'natalia') hpData.natalia = Math.min(100, hpData.natalia + puntos);
-    actualizarBarrasHP();
-    await guardarHPEnSupabase();
-}
-
-async function reducirHP(persona, puntos) {
-    if (persona === 'diego') {
-        hpData.diego = Math.max(0, hpData.diego - puntos);
-        if (hpData.diego === 0) abrirModalCanje('diego');
-    } else if (persona === 'natalia') {
-        hpData.natalia = Math.max(0, hpData.natalia - puntos);
-        if (hpData.natalia === 0) abrirModalCanje('natalia');
-    }
-    actualizarBarrasHP();
-    await guardarHPEnSupabase();
 }
 
 // Metas
@@ -254,12 +237,20 @@ async function toggleMeta(tipo, id, event) {
 
     if (estadoNuevo) {
         lanzarChispasEnEsquinas(id);
-        
-        // Si es meta JUNTOS, abrir el modal de encuesta para otorgar los puntos
+
         if (tipo === 'juntos') {
-            metaIdCumpliendo = id;
-            tipoMetaCumpliendo = tipo;
-            document.getElementById('modal-cumplir-meta').classList.add('activo');
+            await agregarXP(25);
+            // vale al azar
+            const valeAzar = catalogoValesAmor[Math.floor(Math.random() * catalogoValesAmor.length)];
+            await desbloquearValeAmor(valeAzar);
+
+            const textoRecompensa = document.getElementById('texto-recompensa-desbloqueada');
+            if (textoRecompensa) textoRecompensa.innerText = `Desbloquearon: "${valeAzar}"`;
+            
+            const modalCumplir = document.getElementById('modal-cumplir-meta');
+            if (modalCumplir) modalCumplir.classList.add('activo');
+        } else {
+            await agregarXP(15);
         }
     }
 
@@ -270,125 +261,23 @@ async function toggleMeta(tipo, id, event) {
     }).eq('id', id);
 }
 
-function procesarPuntosCumplimiento(quien) {
-    if (quien === 'ambos') {
-        sumarHP('diego', 20);
-        sumarHP('natalia', 20);
-    } else if (quien === 'diego') {
-        sumarHP('diego', 20);
-    } else if (quien === 'natalia') {
-        sumarHP('natalia', 20);
-    }
-
-    document.getElementById('modal-cumplir-meta').classList.remove('activo');
-    metaIdCumpliendo = null;
-    tipoMetaCumpliendo = null;
+function cerrarModalCumplir() {
+    const modalCumplir = document.getElementById('modal-cumplir-meta');
+    if (modalCumplir) modalCumplir.classList.remove('activo');
 }
 
-function abrirModalBorrar(tipo, id) {
-    tipoMetaEnBorrado = tipo;
-    metaIdEnBorrado = id;
-
-    document.getElementById('borrar-paso-1').style.display = 'none';
-    document.getElementById('borrar-paso-2').style.display = 'none';
-    document.getElementById('borrar-individual').style.display = 'none';
-
-    if (tipo === 'diego' || tipo === 'natalia') {
-        document.getElementById('borrar-individual').style.display = 'block';
-    } else {
-        document.getElementById('borrar-paso-1').style.display = 'block';
-    }
-
-    document.getElementById('modal-borrar').classList.add('activo');
-}
-
-function procesarBorradoPaso1(opcion) {
-    if (opcion === 'equivocacion') {
-        ejecutarBorradoFinal();
-    } else if (opcion === 'no_cumplira') {
-        document.getElementById('borrar-paso-1').style.display = 'none';
-        document.getElementById('borrar-paso-2').style.display = 'block';
-    }
-}
-
-function finalizarBorradoConRazon(razon) {
-    if (razon === 'Diego tuvo la culpa') reducirHP('diego', 20);
-    if (razon === 'Natalia tuvo la culpa') reducirHP('natalia', 20);
-    ejecutarBorradoFinal();
-}
-
-async function ejecutarBorradoFinal() {
-    if (metaIdEnBorrado !== null) {
-        const idParaBorrar = metaIdEnBorrado;
-        cerrarModalBorrar();
-        await _supabase.from('metas').delete().eq('id', idParaBorrar);
-    }
-}
-
-function cerrarModalBorrar() {
-    document.getElementById('modal-borrar').classList.remove('activo');
-    metaIdEnBorrado = null;
-    tipoMetaEnBorrado = null;
-}
-
-// Recompensas
-function abrirModalCanje(quienMurio) {
-    const modal = document.getElementById('modal-recompensa-muerte');
-    const titulo = document.getElementById('titulo-modal-muerte');
-    const contenedor = document.getElementById('contenedor-opciones-recompensa');
-
-    contenedor.innerHTML = '';
-
-    if (quienMurio === 'diego') {
-        titulo.innerText = "¡DIEGO LLEGÓ A 0 HP! 💀";
-        const opcionesNatalia = [
-            "Salir a comer juntos a donde Natalia diga",
-            "Comprarle algo a Natalia",
-            "Invitarlo a su casa y hacer TODO lo que ella diga"
-        ];
-        opcionesNatalia.forEach(opcion => {
-            const btn = document.createElement('button');
-            btn.classList.add('btn-opcion-modal');
-            btn.innerText = opcion;
-            btn.onclick = () => registrarRecompensaYRestaurar('natalia', 'diego', opcion);
-            contenedor.appendChild(btn);
-        });
-    } else {
-        titulo.innerText = "¡NATALIA LLEGÓ A 0 HP! 💀";
-        const opcionesDiego = [
-            "Invitarla a mi casa y hacer TODO lo que yo diga",
-            "Cocinarme algún postre"
-        ];
-        opcionesDiego.forEach(opcion => {
-            const btn = document.createElement('button');
-            btn.classList.add('btn-opcion-modal');
-            btn.innerText = opcion;
-            btn.onclick = () => registrarRecompensaYRestaurar('diego', 'natalia', opcion);
-            contenedor.appendChild(btn);
-        });
-    }
-
-    modal.classList.add('activo');
-}
-
-async function registrarRecompensaYRestaurar(ganador, perdedor, textoOpcion) {
-    if (perdedor === 'diego') hpData.diego = 100;
-    if (perdedor === 'natalia') hpData.natalia = 100;
-
-    actualizarBarrasHP();
-    await guardarHPEnSupabase();
-
-    const nuevaRecompensa = {
+// vales de amor
+async function desbloquearValeAmor(textoVale) {
+    const nuevoVale = {
         id: Date.now(),
-        ganador: ganador,
-        perdedor: perdedor,
-        texto: textoOpcion,
+        ganador: 'juntos',
+        perdedor: 'juntos',
+        texto: textoVale,
         cumplida: false,
         fecha_cumplida: null
     };
 
-    await _supabase.from('recompensas').insert([nuevaRecompensa]);
-    document.getElementById('modal-recompensa-muerte').classList.remove('activo');
+    await _supabase.from('recompensas').insert([nuevoVale]);
 }
 
 async function marcarRecompensaCumplida(id) {
@@ -397,6 +286,27 @@ async function marcarRecompensaCumplida(id) {
         cumplida: true,
         fecha_cumplida: fecha
     }).eq('id', id);
+}
+
+// borrar metas
+function abrirModalBorrar(tipo, id) {
+    metaIdEnBorrado = id;
+    const modalBorrar = document.getElementById('modal-borrar');
+    if (modalBorrar) modalBorrar.classList.add('activo');
+}
+
+function cerrarModalBorrar() {
+    const modalBorrar = document.getElementById('modal-borrar');
+    if (modalBorrar) modalBorrar.classList.remove('activo');
+    metaIdEnBorrado = null;
+}
+
+async function ejecutarBorradoFinal() {
+    if (metaIdEnBorrado !== null) {
+        const idParaBorrar = metaIdEnBorrado;
+        cerrarModalBorrar();
+        await _supabase.from('metas').delete().eq('id', idParaBorrar);
+    }
 }
 
 // RENDERIZADO DE INTERFAZ
@@ -456,7 +366,7 @@ function renderizarJardin() {
     const todasLasMetas = [...metasJuntos, ...metasDiego, ...metasNatalia];
 
     if (todasLasMetas.length === 0) {
-        gridJardin.innerHTML = `<div class="tierra-vacia"><p>🌱 Agrega tu primera meta para plantar una semilla.</p></div>`;
+        gridJardin.innerHTML = `<div class="tierra-vacia"><p>🌱 Agreguen su primera meta para plantar una semilla.</p></div>`;
         return;
     }
 
@@ -496,7 +406,7 @@ function renderizarRecompensas() {
     if (!grid) return;
 
     if (listaRecompensas.length === 0) {
-        grid.innerHTML = `<p style="color: #bc6c25;">📜 No hay recompensas pendientes.</p>`;
+        grid.innerHTML = `<p style="color: #ff1493; font-weight: bold;">🎟️ Aún no hay vales desbloqueados.</p>`;
         return;
     }
 
@@ -507,18 +417,14 @@ function renderizarRecompensas() {
         card.classList.add('card-recompensa');
         if (rec.cumplida) card.classList.add('cumplida');
 
-        const acreedor = rec.ganador === 'natalia' ? 'Natalia' : 'Diego';
-        const deudor = rec.perdedor === 'diego' ? 'Diego' : 'Natalia';
-
         card.innerHTML = `
             <div>
-                <span style="font-size: 1.8rem;">📜</span>
-                <p style="font-size: 0.85rem; font-weight: bold; color: #bc6c25; margin-top: 6px;">${rec.texto}</p>
-                <p style="font-size: 0.7rem; color: #666; margin-top: 4px;">Paga: <b>${deudor}</b> | Para: <b>${acreedor}</b></p>
+                <span style="font-size: 1.8rem;">🎟️</span>
+                <p style="font-size: 0.85rem; font-weight: bold; color: #ff1493; margin-top: 6px;">${rec.texto}</p>
             </div>
             ${rec.cumplida ? 
-                `<p style="font-size: 0.75rem; color: #2a9d8f; font-weight: bold; margin-top: 8px;">✅ Cumplido el ${rec.fecha_cumplida}</p>` :
-                `<button class="btn-cumplir-recompensa" onclick="marcarRecompensaCumplida(${rec.id})">✓ Marcar Pagada</button>`
+                `<p style="font-size: 0.75rem; color: #2a9d8f; font-weight: bold; margin-top: 8px;">💖 Disfrutado el ${rec.fecha_cumplida}</p>` :
+                `<button class="btn-cumplir-recompensa" onclick="marcarRecompensaCumplida(${rec.id})">✓ Canjear Vale</button>`
             }
         `;
 
@@ -527,7 +433,6 @@ function renderizarRecompensas() {
 }
 
 function abrirModalEditar(tipo, id) {
-    tipoMetaEnBorrado = tipo;
     metaIdEnEdicion = id;
     const lista = obtenerListaPorTipo(tipo);
     const meta = lista.find(m => m.id === id);
@@ -562,6 +467,7 @@ function obtenerListaPorTipo(tipo) {
     return [];
 }
 
+// efecto de chispas
 function lanzarChispasEnEsquinas(id) {
     const tarjeta = document.getElementById(`card-meta-${id}`);
     if (!tarjeta) return;
@@ -570,18 +476,29 @@ function lanzarChispasEnEsquinas(id) {
     crearBroteChispas(rect.right - 10, rect.top + 5);
 }
 
+function lanzarLluviaChispas() {
+    for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+            const randomX = window.innerWidth * Math.random();
+            const randomY = window.innerHeight * 0.3;
+            crearBroteChispas(randomX, randomY);
+        }, i * 150);
+    }
+}
+
 function crearBroteChispas(origenX, origenY) {
     const contenedor = document.getElementById('contenedor-chispas');
+    if (!contenedor) return;
     const colores = ['#ff1493', '#ff69b4', '#2a9d8f', '#ffd166', '#ffffff'];
 
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 14; i++) {
         const chispa = document.createElement('div');
         chispa.classList.add('chispa-pixel');
         chispa.style.left = `${origenX}px`;
         chispa.style.top = `${origenY}px`;
         chispa.style.backgroundColor = colores[Math.floor(Math.random() * colores.length)];
-        chispa.style.setProperty('--dx', `${(Math.random() - 0.5) * 80}px`);
-        chispa.style.setProperty('--dy', `${(Math.random() * -60) - 20}px`);
+        chispa.style.setProperty('--dx', `${(Math.random() - 0.5) * 100}px`);
+        chispa.style.setProperty('--dy', `${(Math.random() * -80) - 20}px`);
 
         contenedor.appendChild(chispa);
         setTimeout(() => chispa.remove(), 600);
