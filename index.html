@@ -15,10 +15,10 @@
         <header>
             <h1>Nuestro Mundo</h1>
             
-            <!-- Personajes Grandes con Barras de Vida (HP) -->
+            <!-- Personajes grandes -->
             <div id="cuadro-personajes-hp">
                 
-                <!-- JUGADOR 1: NATALIA -->
+                <!-- natalia -->
                 <div class="tarjeta-jugador">
                     <div class="contenedor-avatar">
                         <img id="avatar-natalia" src="imagenes/Natalia.png" onError="this.src='https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f469.png'" alt="Natalia" class="sprite-avatar-grande">
@@ -35,7 +35,7 @@
                     </div>
                 </div>
 
-                <!-- JUGADOR 2: DIEGO -->
+                <!-- diego -->
                 <div class="tarjeta-jugador">
                     <div class="contenedor-avatar">
                         <img id="avatar-diego" src="imagenes/Diego.png" onError="this.src='https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f468.png'" alt="Diego" class="sprite-avatar-grande">
@@ -54,7 +54,7 @@
 
             </div>
 
-            <!-- Navegación con Pestañas -->
+            <!-- navegacion de pestañas -->
             <nav id="navegacion-pestanas">
                 <button class="tab-btn activo" onclick="cambiarPestana('pestana-juntos', this)">Metas Juntos</button>
                 <button class="tab-btn btn-individual" onclick="cambiarPestana('pestana-individuales', this)">Metas Individuales</button>
@@ -64,13 +64,13 @@
         </header>
 
         <main>
-            <!-- PESTAÑA 1: METAS EN PAREJA -->
+            <!-- pestaña de metas en pareja -->
             <section id="pestana-juntos" class="contenido-pestana activa">
                 <h2>Nuestras Metas Juntos</h2>
                 <div id="lista-metas-juntos" class="lista-vertical"></div>
             </section>
 
-            <!-- PESTAÑA 2: METAS INDIVIDUALES -->
+            <!-- pestaña de metas individuales -->
             <section id="pestana-individuales" class="contenido-pestana">
                 <h2>Metas Individuales</h2>
                 <div class="grid-individuales">
@@ -94,14 +94,14 @@
                 </div>
             </section>
 
-            <!-- PESTAÑA 3: JARDÍN -->
+            <!-- pestaña jardin -->
             <section id="pestana-jardin" class="contenido-pestana">
                 <h2>Nuestro Jardín de Flores 🌸</h2>
                 <p class="subtitulo-jardin">Semillas pendientes y flores en pleno esplendor.</p>
                 <div id="grid-jardin"></div>
             </section>
 
-            <!-- PESTAÑA 4: RECOMPENSAS / DEUDAS -->
+            <!-- pestaña recompensas -->
             <section id="pestana-recompensas" class="contenido-pestana">
                 <h2>Tablero de Recompensas 📜</h2>
                 <p class="subtitulo-jardin">Castigos ganados al reducir la barra de vida del otro a 0 HP.</p>
@@ -110,7 +110,7 @@
         </main>
     </div>
 
-    <!-- MODAL EDITAR META -->
+    <!-- editar meta -->
     <div id="modal-editar" class="modal-overlay">
         <div class="modal-contenido">
             <h3>Editar Meta ✎</h3>
@@ -125,7 +125,7 @@
     <!-- MODAL BONITO PARA BORRAR METAS -->
     <div id="modal-borrar" class="modal-overlay">
         <div class="modal-contenido">
-            <!-- OPCIÓN A: CUESTIONARIO DE CULPAS (METAS EN PAREJA) -->
+            <!-- cuestionario de culpa-->
             <div id="borrar-paso-1" style="display: none;">
                 <h3>¿Por qué quieres borrar la meta? 🗑</h3>
                 <div class="opciones-encuesta">
@@ -146,7 +146,7 @@
                 <button class="btn-cancelar-secundario" onclick="cerrarModalBorrar()">Cancelar</button>
             </div>
 
-            <!-- OPCIÓN B: CONFIRMACIÓN BONITA (METAS INDIVIDUALES) -->
+            <!-- OPCIÓN B: confirmacion bonita -->
             <div id="borrar-individual" style="display: none;">
                 <h3>¿Seguro que quieres borrar esta meta personal? 🗑</h3>
                 <p style="font-size: 0.85rem; color: #666; margin-bottom: 16px;">Esta acción eliminará la meta de tu lista personal.</p>
@@ -164,14 +164,14 @@
             <h3>¡Meta Cumplida! 🎉🌸</h3>
             <p style="margin-bottom: 16px; font-size: 0.9rem; color: #555;">¿Quién puso de su parte para lograrlo?</p>
             <div class="opciones-encuesta">
-                <button class="btn-opcion-modal" onclick="procesarPuntosCumplimiento('ambos')">🙌 ¡Ambos pusimos de nuestra parte! (+20 HP a los dos)</button>
-                <button class="btn-opcion-modal" onclick="procesarPuntosCumplimiento('diego')">👦 Fue principalmente gracias a Diego (+20 HP)</button>
-                <button class="btn-opcion-modal" onclick="procesarPuntosCumplimiento('natalia')">👧 Fue principalmente gracias a Natalia (+20 HP)</button>
+                <button class="btn-opcion-modal" onclick="procesarPuntosCumplimiento('ambos')"> ¡Ambos pusimos de nuestra parte! (+20 HP a los dos)</button>
+                <button class="btn-opcion-modal" onclick="procesarPuntosCumplimiento('diego')"> Fue principalmente gracias a Diego (+20 HP)</button>
+                <button class="btn-opcion-modal" onclick="procesarPuntosCumplimiento('natalia')"> Fue principalmente gracias a Natalia (+20 HP)</button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL DE DERROTA / CANJE DE RECOMPENSA (0 HP) -->
+    <!-- canjeo de recompensa -->
     <div id="modal-recompensa-muerte" class="modal-overlay">
         <div class="modal-contenido modal-especial">
             <h3 id="titulo-modal-muerte">¡ALGUIEN LLEGÓ A 0 HP! 💀</h3>
