@@ -6,7 +6,6 @@
     padding: 0;
 }
 
-/* PARED ROSA CON TEXTURA DE FLORES PÍXEL */
 body {
     background-color: #ffb6c1;
     background-image: 
@@ -25,7 +24,7 @@ body {
     padding: 15px;
 }
 
-/* MARCO A PANTALLA COMPLETA */
+/* marco */
 #marco-principal {
     background-color: #fff0f5;
     border: 6px solid #ff69b4;
@@ -51,7 +50,7 @@ h1 {
     text-shadow: 2px 2px 0px #ffffff; 
 }
 
-/* AVATARES GRANDES Y BARRAS DE VIDA (HP) */
+/* avatares y barras de vida */
 #cuadro-personajes-hp {
     display: flex;
     justify-content: center;
@@ -82,7 +81,7 @@ h1 {
     align-items: flex-end;
 }
 
-/* TAMAÑO UNIFORME PARA SKINS NORMALES Y DAÑADAS */
+/* tamaño de las skins dañadas */
 .sprite-avatar-grande {
     height: 65px !important;
     width: auto;
@@ -132,7 +131,7 @@ h1 {
     background: linear-gradient(90deg, #e63946, #d62828) !important;
 }
 
-/* NAVEGACIÓN Y PESTAÑAS */
+/* navegacion y pestañas */
 #navegacion-pestanas { 
     display: flex; 
     justify-content: center; 
@@ -190,7 +189,7 @@ h1 {
 .contenido-pestana.activa { display: block; }
 h2 { font-size: 1.6rem; margin-bottom: 20px; color: #ff1493; text-align: center; }
 
-/* LISTA DE METAS Y RENGLONES */
+/* lista de metas */
 .lista-vertical { 
     display: flex; 
     flex-direction: column; 
@@ -300,7 +299,7 @@ h2 { font-size: 1.6rem; margin-bottom: 20px; color: #ff1493; text-align: center;
 #btn-agregar { background-color: #ff69b4; color: #fff; border: 2px solid #ff1493; padding: 10px 18px; font-family: inherit; cursor: pointer; border-radius: 6px; transition: all 0.2s; }
 #btn-agregar:hover { background-color: #2a9d8f; border-color: #1e7166; transform: scale(1.03); }
 
-/* SECCIÓN METAS INDIVIDUALES */
+/* metas individuales */
 .grid-individuales {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -314,7 +313,7 @@ h2 { font-size: 1.6rem; margin-bottom: 20px; color: #ff1493; text-align: center;
     transition: transform 0.2s;
 }
 
-/* MARCO NATALIA (AZUL OCÉANO) */
+/* Marco de natalia) */
 .marco-natalia {
     background-color: #f0f8ff;
     border: 4px solid #457b9d;
@@ -366,7 +365,7 @@ h2 { font-size: 1.6rem; margin-bottom: 20px; color: #ff1493; text-align: center;
     color: #457b9d;
 }
 
-/* MARCO DIEGO (ROJO FUEGO) */
+/* Marco de diego */
 .marco-diego {
     background-color: #fff0f0;
     border: 4px solid #e63946;
@@ -441,7 +440,7 @@ h2 { font-size: 1.6rem; margin-bottom: 20px; color: #ff1493; text-align: center;
     transition: all 0.2s;
 }
 
-/* SECCIÓN JARDÍN */
+/* jardin */
 .subtitulo-jardin { text-align: center; color: #666; margin-bottom: 20px; }
 
 #grid-jardin {
@@ -478,7 +477,7 @@ h2 { font-size: 1.6rem; margin-bottom: 20px; color: #ff1493; text-align: center;
     100% { transform: scale(1) rotate(0deg); opacity: 1; }
 }
 
-/* DISTINCIÓN DE FLORES EN EL JARDÍN */
+/* Distincion de flores */
 .card-planta.flor-juntos {
     border: 3px solid #ff69b4;
     box-shadow: 3px 3px 0px #ffb6c1;
@@ -519,7 +518,7 @@ h2 { font-size: 1.6rem; margin-bottom: 20px; color: #ff1493; text-align: center;
     color: #ff1493; 
 }
 
-/* PESTAÑA Y TABLERO DE RECOMPENSAS */
+/* recompensas */
 #grid-recompensas {
     background-color: #fefae0;
     border: 3px solid #dda15e;
@@ -599,9 +598,7 @@ h2 { font-size: 1.6rem; margin-bottom: 20px; color: #ff1493; text-align: center;
 .btn-opcion-modal.btn-peligro:hover { background-color: #e63946; color: #ffffff; }
 .btn-cancelar-secundario { background: transparent; border: none; color: #888; cursor: pointer; font-family: inherit; text-decoration: underline; }
 
-/* ==========================================
-   AJUSTES RESPONSIVOS PARA CELULARES Y IPAD
-   ========================================== */
+
 @media (max-width: 768px) {
     body {
         padding: 8px;
