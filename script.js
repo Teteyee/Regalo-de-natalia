@@ -4,7 +4,7 @@ const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// CLASIFICACIÓN Y ORDEN DE MASCOTAS
+// mascotas
 const mascotasDiego = [
     { nombre: "Loki", ruta: "imagenes/Loki.png" }
 ];
@@ -18,20 +18,20 @@ const mascotasNatalia = [
 
 const todasLasMascotas = [...mascotasNatalia, ...mascotasDiego];
 
-// FLORES Y SEMILLA
+// flores
 const listaFlores = [
-    "Flower_1/Flower 1 - COLORFUL.png", "Flower_1/Flower 1 - BLUE.png", "Flower_1/Flower 1 - RED.png",
-    "Flower_1/Flower 1 - TEAL.png", "Flower_1/Flower 1 - YELLOW.png", "Flower_2/Flower 2 - MAGENTA.png",
-    "Flower_2/Flower 2 - PINK.png", "Flower_2/Flower 2 - PURPLE.png", "Flower_2/Flower 2 - TEAL.png",
-    "Flower_5/Flower 5 - BLUE.png", "Flower_5/Flower 5 - ORANGE.png", "Flower_5/Flower 5 - PINK.png",
-    "Flower_5/Flower 5 - PURPLE.png", "Flower_6/Flower 6 - BLUE.png", "Flower_6/Flower 6 - ORANGE.png",
-    "Flower_6/Flower 6 - PINK.png", "Flower_6/Flower 6 - PINK 2.png", "Flower_6/Flower 6 - PURPLE.png",
-    "Flower_7/Flower 7 - BLUE.png", "Flower_7/Flower 7 - ORANGE.png", "Flower_7/Flower 7 - PINK.png",
-    "Flower_7/Flower 7 - PINK 2.png", "Flower_7/Flower 7 - PURPLE.png", "Flower_8/Flower 8 - ORANGE.png",
-    "Flower_8/Flower 8 - PINK.png", "Flower_8/Flower 8 - RED.png", "Flower_8/Flower 8 - YELLOW.png",
-    "Flower_9/Flower 9 - ORANGE.png", "Flower_9/Flower 9 - PURPLE.png", "Flower_9/Flower 9 - RED.png",
-    "Flower_9/Flower 9 - YELLOW.png", "Flower_13/Flower 13 - COLORFUL.png", "Flower_13/Flower 13 - PINK.png",
-    "Flower_13/Flower 13 - PURPLE.png", "Flower_13/Flower 13 - YELLOW.png"
+    "imagenes/Flower_1/Flower 1 - COLORFUL.png", "imagenes/Flower_1/Flower 1 - BLUE.png", "imagenes/Flower_1/Flower 1 - RED.png",
+    "imagenes/Flower_1/Flower 1 - TEAL.png", "imagenes/Flower_1/Flower 1 - YELLOW.png", "imagenes/Flower_2/Flower 2 - MAGENTA.png",
+    "imagenes/Flower_2/Flower 2 - PINK.png", "imagenes/Flower_2/Flower 2 - PURPLE.png", "imagenes/Flower_2/Flower 2 - TEAL.png",
+    "imagenes/Flower_5/Flower 5 - BLUE.png", "imagenes/Flower_5/Flower 5 - ORANGE.png", "imagenes/Flower_5/Flower 5 - PINK.png",
+    "imagenes/Flower_5/Flower 5 - PURPLE.png", "imagenes/Flower_6/Flower 6 - BLUE.png", "imagenes/Flower_6/Flower 6 - ORANGE.png",
+    "imagenes/Flower_6/Flower 6 - PINK.png", "imagenes/Flower_6/Flower 6 - PINK 2.png", "imagenes/Flower_6/Flower 6 - PURPLE.png",
+    "imagenes/Flower_7/Flower 7 - BLUE.png", "imagenes/Flower_7/Flower 7 - ORANGE.png", "imagenes/Flower_7/Flower 7 - PINK.png",
+    "imagenes/Flower_7/Flower 7 - PINK 2.png", "imagenes/Flower_7/Flower 7 - PURPLE.png", "imagenes/Flower_8/Flower 8 - ORANGE.png",
+    "imagenes/Flower_8/Flower 8 - PINK.png", "imagenes/Flower_8/Flower 8 - RED.png", "imagenes/Flower_8/Flower 8 - YELLOW.png",
+    "imagenes/Flower_9/Flower 9 - ORANGE.png", "imagenes/Flower_9/Flower 9 - PURPLE.png", "imagenes/Flower_9/Flower 9 - RED.png",
+    "imagenes/Flower_9/Flower 9 - YELLOW.png", "imagenes/Flower_13/Flower 13 - COLORFUL.png", "imagenes/Flower_13/Flower 13 - PINK.png",
+    "imagenes/Flower_13/Flower 13 - PURPLE.png", "imagenes/Flower_13/Flower 13 - YELLOW.png"
 ];
 
 const imagenSemilla = "imagenes/Semilla.png";
@@ -49,7 +49,7 @@ let tipoMetaEnBorrado = null;
 let metaIdCumpliendo = null;
 let tipoMetaCumpliendo = null;
 
-// INICIALIZACIÓN
+
 document.addEventListener('DOMContentLoaded', async () => {
     // Dibujar interfaz inmediatamente
     actualizarBarrasHP();
@@ -109,7 +109,7 @@ async function cargarDatosDesdeSupabase() {
     }
 }
 
-// TIEMPO REAL
+// tiempo real
 function suscribirseACambiosEnTiempoReal() {
     _supabase.channel('cambios-juego')
         .on('postgres_changes', { event: '*', schema: 'public', table: 'estado_jugadores' }, payload => {
@@ -139,7 +139,7 @@ function suscribirseACambiosEnTiempoReal() {
         .subscribe();
 }
 
-// BARRAS DE VIDA (HP)
+// barras de vida
 function actualizarBarrasHP() {
     const fillDiego = document.getElementById('hp-fill-diego');
     const textoDiego = document.getElementById('hp-texto-diego');
@@ -204,7 +204,7 @@ async function reducirHP(persona, puntos) {
     await guardarHPEnSupabase();
 }
 
-// METAS
+// Metas
 async function agregarMetaJuntos() {
     const input = document.getElementById('nueva-meta-input');
     if (!input) return;
@@ -331,7 +331,7 @@ function cerrarModalBorrar() {
     tipoMetaEnBorrado = null;
 }
 
-// RECOMPENSAS
+// Recompensas
 function abrirModalCanje(quienMurio) {
     const modal = document.getElementById('modal-recompensa-muerte');
     const titulo = document.getElementById('titulo-modal-muerte');
